@@ -11,6 +11,8 @@ import UIKit
 class SellItemVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    private var categories = Category.getCategories()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,13 +23,15 @@ class SellItemVC: UIViewController {
 
 extension SellItemVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as? CategoryCell else {
             fatalError()
         }
+        let aCategory = categories[indexPath.row]
+        cell.configureCell(category: aCategory)
         return cell
     }
 }
