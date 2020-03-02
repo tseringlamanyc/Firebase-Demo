@@ -48,10 +48,9 @@ class LoginViewController: UIViewController {
                         self?.errorLabel.text = "Error:\(error)"
                         self?.errorLabel.textColor = .systemRed
                     }
-                case .success(let authData):
+                case .success(_):
                     DispatchQueue.main.async {
-                        self?.errorLabel.textColor = .systemGray
-                        self?.errorLabel.text = "Lets fighting love: \(authData.user.email ?? "bawls")"
+                        self?.nagivateToMainView()
                     }
                 }
             }
@@ -63,14 +62,17 @@ class LoginViewController: UIViewController {
                         self?.errorLabel.text = "Error:\(error.localizedDescription)"
                         self?.errorLabel.textColor = .systemRed
                     }
-                case .success(let authData):
+                case .success(_):
                     DispatchQueue.main.async {
-                        self?.errorLabel.textColor = .systemGray
-                        self?.errorLabel.text = "First time \(authData.user.email ?? "")"
+                        self?.nagivateToMainView()
                     }
                 }
             }
         }
+    }
+    
+    private func nagivateToMainView() {
+        UIViewController.showVC(storyboard: "MainView", VCid: "MainTabBar")
     }
     
     private func clearErrorLabel() {

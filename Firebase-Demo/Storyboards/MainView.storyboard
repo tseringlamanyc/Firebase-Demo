@@ -4,40 +4,150 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Sell Item-->
         <scene sceneID="7he-Us-7j7">
             <objects>
-                <viewController id="D1u-lj-nFc" sceneMemberID="viewController">
+                <viewController id="D1u-lj-nFc" customClass="SellItemVC" customModule="Firebase_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="s1m-ZV-GMn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KKX-Ct-fEW">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jfI-wH-VDY">
+                                    <size key="itemSize" width="316" height="344"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CategoryCell" id="NbA-S9-N9U" customClass="CategoryCell" customModule="Firebase_Demo" customModuleProvider="target">
+                                        <rect key="frame" x="49" y="0.0" width="316" height="344"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vOa-bQ-reW">
+                                            <rect key="frame" x="0.0" y="0.0" width="316" height="344"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M0y-N7-kCB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="316" height="206.5"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X9I-M5-zDF">
+                                                    <rect key="frame" x="8" y="315.5" width="300" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="M0y-N7-kCB" firstAttribute="top" secondItem="vOa-bQ-reW" secondAttribute="top" constant="0.01" id="4yZ-ci-3yb"/>
+                                                <constraint firstItem="M0y-N7-kCB" firstAttribute="leading" secondItem="vOa-bQ-reW" secondAttribute="leading" constant="0.01" id="Ke6-p0-2KU"/>
+                                                <constraint firstItem="M0y-N7-kCB" firstAttribute="height" secondItem="vOa-bQ-reW" secondAttribute="height" multiplier="0.6" id="Qbo-6f-8ud"/>
+                                                <constraint firstAttribute="trailing" secondItem="M0y-N7-kCB" secondAttribute="trailing" constant="0.01" id="QxB-BI-vY5"/>
+                                                <constraint firstItem="X9I-M5-zDF" firstAttribute="leading" secondItem="vOa-bQ-reW" secondAttribute="leading" constant="8" id="T6J-Nm-kVI"/>
+                                                <constraint firstAttribute="bottom" secondItem="X9I-M5-zDF" secondAttribute="bottom" constant="8" id="Ycr-hQ-F3n"/>
+                                                <constraint firstAttribute="trailing" secondItem="X9I-M5-zDF" secondAttribute="trailing" constant="8" id="xGW-RH-Qdp"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="316" height="344"/>
+                                        <connections>
+                                            <outlet property="categoryLabel" destination="X9I-M5-zDF" id="gxY-LX-YBu"/>
+                                            <outlet property="itemImage" destination="M0y-N7-kCB" id="9BF-0X-l0J"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="KKX-Ct-fEW" firstAttribute="trailing" secondItem="qjt-8L-9QB" secondAttribute="trailing" constant="0.01" id="HlF-21-p7G"/>
+                            <constraint firstItem="KKX-Ct-fEW" firstAttribute="bottom" secondItem="qjt-8L-9QB" secondAttribute="bottom" constant="0.01" id="I5Z-2D-UQu"/>
+                            <constraint firstItem="KKX-Ct-fEW" firstAttribute="top" secondItem="s1m-ZV-GMn" secondAttribute="top" constant="0.01" id="lOy-Zf-b9S"/>
+                            <constraint firstItem="KKX-Ct-fEW" firstAttribute="leading" secondItem="qjt-8L-9QB" secondAttribute="leading" constant="0.01" id="v47-SO-Wis"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="qjt-8L-9QB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Sell Item" image="dollarsign.square.fill" catalog="system" id="owX-ZN-eyL"/>
+                    <connections>
+                        <outlet property="collectionView" destination="KKX-Ct-fEW" id="3Dz-mD-0Ti"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ca7-Rn-Crr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-417" y="-297"/>
+            <point key="canvasLocation" x="-417.39130434782612" y="-297.32142857142856"/>
         </scene>
         <!--Profile-->
         <scene sceneID="1hq-gA-vno">
             <objects>
-                <viewController id="jUD-5M-MzY" sceneMemberID="viewController">
+                <viewController id="jUD-5M-MzY" customClass="ProfileVC" customModule="Firebase_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6Tt-5d-pH6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Qht-iI-YlL" customClass="DesignableImageView" customModule="Firebase_Demo" customModuleProvider="target">
+                                <rect key="frame" x="147" y="84.5" width="120" height="119"/>
+                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="Wyz-xe-C2F"/>
+                                    <constraint firstAttribute="width" constant="120" id="jLs-gD-2BM"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="60"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Enter a display name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6u-zd-B78">
+                                <rect key="frame" x="20" y="224" width="374" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="UdV-38-8ZX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7l-Hw-fYM">
+                                <rect key="frame" x="20" y="288" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcv-a0-Ub6">
+                                <rect key="frame" x="158" y="433" width="98" height="30"/>
+                                <state key="normal" title="Update Profile"/>
+                                <connections>
+                                    <action selector="updatedProfile:" destination="jUD-5M-MzY" eventType="touchUpInside" id="Ncv-t1-4J2"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Qht-iI-YlL" firstAttribute="centerX" secondItem="6Tt-5d-pH6" secondAttribute="centerX" id="5Ie-HL-gOp"/>
+                            <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="U7l-Hw-fYM" secondAttribute="trailing" constant="20" id="FXp-0f-tHC"/>
+                            <constraint firstItem="Qht-iI-YlL" firstAttribute="top" secondItem="b2S-vW-z0f" secondAttribute="top" constant="40" id="HT0-t7-Upi"/>
+                            <constraint firstItem="tcv-a0-Ub6" firstAttribute="centerY" secondItem="6Tt-5d-pH6" secondAttribute="centerY" id="PFF-Yy-Y8a"/>
+                            <constraint firstItem="T6u-zd-B78" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" constant="20" id="VFy-xG-4fJ"/>
+                            <constraint firstItem="T6u-zd-B78" firstAttribute="top" secondItem="Qht-iI-YlL" secondAttribute="bottom" constant="20" id="Wzy-2t-STY"/>
+                            <constraint firstItem="tcv-a0-Ub6" firstAttribute="centerX" secondItem="6Tt-5d-pH6" secondAttribute="centerX" id="dxr-kZ-EE6"/>
+                            <constraint firstItem="U7l-Hw-fYM" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" constant="20" id="fNa-Fu-pcE"/>
+                            <constraint firstItem="U7l-Hw-fYM" firstAttribute="top" secondItem="T6u-zd-B78" secondAttribute="bottom" constant="20" id="pad-Mw-1SE"/>
+                            <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="T6u-zd-B78" secondAttribute="trailing" constant="20" id="zqV-Aq-txu"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="b2S-vW-z0f"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="nUM-t5-vLf"/>
+                    <connections>
+                        <outlet property="displayNameTF" destination="T6u-zd-B78" id="zjq-uT-IIV"/>
+                        <outlet property="emailLabel" destination="U7l-Hw-fYM" id="h3V-PL-tkf"/>
+                        <outlet property="profileImage" destination="Qht-iI-YlL" id="SpC-di-y2A"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAa-L6-9le" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-417" y="442"/>
+            <point key="canvasLocation" x="-417.39130434782612" y="441.96428571428572"/>
         </scene>
         <!--Feed-->
         <scene sceneID="tGi-Es-s7A">
@@ -58,7 +168,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="d0Q-pB-ugJ">
             <objects>
-                <tabBarController id="CPv-Lx-Nco" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabBar" id="CPv-Lx-Nco" customClass="TabBarController" customModule="Firebase_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="X5z-fj-BCc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -77,6 +187,7 @@
     </scenes>
     <resources>
         <image name="dollarsign.square.fill" catalog="system" width="64" height="56"/>
+        <image name="person.circle.fill" catalog="system" width="64" height="60"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
         <image name="safari.fill" catalog="system" width="64" height="60"/>
     </resources>
