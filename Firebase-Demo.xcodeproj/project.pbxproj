@@ -16,6 +16,8 @@
 		523933B7240D5F9C006676C5 /* VC + Navigation .swift in Sources */ = {isa = PBXBuildFile; fileRef = 523933B6240D5F9C006676C5 /* VC + Navigation .swift */; };
 		523933B9240D5FDA006676C5 /* VC + Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523933B8240D5FDA006676C5 /* VC + Alert.swift */; };
 		523933BB240D756E006676C5 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523933BA240D756E006676C5 /* CategoryCell.swift */; };
+		523933BE240D7728006676C5 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523933BD240D7728006676C5 /* CategoryModel.swift */; };
+		523933C0240D7752006676C5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523933BF240D7752006676C5 /* Color.swift */; };
 		5248D4E624096E4E00FE983B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5248D4E524096E4E00FE983B /* GoogleService-Info.plist */; };
 		525ECDC22409753C00D0245C /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525ECDC12409753C00D0245C /* AuthSession.swift */; };
 		57845ACD24092D4300F35651 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57845ACC24092D4300F35651 /* AppDelegate.swift */; };
@@ -52,6 +54,8 @@
 		523933B6240D5F9C006676C5 /* VC + Navigation .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VC + Navigation .swift"; sourceTree = "<group>"; };
 		523933B8240D5FDA006676C5 /* VC + Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VC + Alert.swift"; sourceTree = "<group>"; };
 		523933BA240D756E006676C5 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		523933BD240D7728006676C5 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
+		523933BF240D7752006676C5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		5248D4E524096E4E00FE983B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		525ECDC12409753C00D0245C /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
 		57845AC924092D4300F35651 /* Firebase-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Firebase-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,8 +103,17 @@
 			children = (
 				523933B6240D5F9C006676C5 /* VC + Navigation .swift */,
 				523933B8240D5FDA006676C5 /* VC + Alert.swift */,
+				523933BF240D7752006676C5 /* Color.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		523933BC240D7718006676C5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				523933BD240D7728006676C5 /* CategoryModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		525ECDC02409751000D0245C /* FIrebase Services */ = {
@@ -134,6 +147,7 @@
 		57845ACB24092D4300F35651 /* Firebase-Demo */ = {
 			isa = PBXGroup;
 			children = (
+				523933BC240D7718006676C5 /* Model */,
 				525ECDC02409751000D0245C /* FIrebase Services */,
 				57845AF72409337B00F35651 /* Storyboards */,
 				57845AF52409332000F35651 /* Views */,
@@ -393,6 +407,7 @@
 				523933B9240D5FDA006676C5 /* VC + Alert.swift in Sources */,
 				523933BB240D756E006676C5 /* CategoryCell.swift in Sources */,
 				57845AD124092D4300F35651 /* LoginViewController.swift in Sources */,
+				523933C0240D7752006676C5 /* Color.swift in Sources */,
 				57845ACD24092D4300F35651 /* AppDelegate.swift in Sources */,
 				523933B0240D5F41006676C5 /* SellItemVC.swift in Sources */,
 				523933B4240D5F6C006676C5 /* CreateItemVC.swift in Sources */,
@@ -401,6 +416,7 @@
 				523933AC240D5F07006676C5 /* TabBarController.swift in Sources */,
 				525ECDC22409753C00D0245C /* AuthSession.swift in Sources */,
 				57845ACF24092D4300F35651 /* SceneDelegate.swift in Sources */,
+				523933BE240D7728006676C5 /* CategoryModel.swift in Sources */,
 				523933AE240D5F36006676C5 /* ItemFeedVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
