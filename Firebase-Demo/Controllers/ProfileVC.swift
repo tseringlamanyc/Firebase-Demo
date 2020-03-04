@@ -50,8 +50,21 @@ class ProfileVC: UIViewController {
         })
     }
     
+    @IBAction func editPhoto(_ sender: UIButton) {
+        let alterController = UIAlertController(title: "Photo Option", message: nil, preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: nil)
+        let photoLibrary = UIAlertAction(title: "Library", style: .default, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            alterController.addAction(cameraAction)
+        }
+        alterController.addAction(photoLibrary)
+        alterController.addAction(cancelAction)
+        present(alterController, animated: true)
+    }
     
     @IBAction func signOutPressed(_ sender: UIButton) {
+
     }
 }
 

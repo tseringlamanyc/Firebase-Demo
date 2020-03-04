@@ -69,6 +69,13 @@
                     <constraint firstItem="56R-XA-vm0" firstAttribute="top" secondItem="3kY-jA-83S" secondAttribute="bottom" constant="8" id="yO5-KI-R7i"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="dateLabel" destination="P01-02-3Uv" id="IUn-72-05f"/>
+                <outlet property="itemImage" destination="fcW-8f-24u" id="d0I-kw-ptS"/>
+                <outlet property="itemLabel" destination="3kY-jA-83S" id="SWl-do-qr3"/>
+                <outlet property="priceLabel" destination="3Fz-Ub-D1I" id="in6-12-dy1"/>
+                <outlet property="sellerName" destination="56R-XA-vm0" id="btl-qJ-L3w"/>
+            </connections>
             <point key="canvasLocation" x="97.826086956521749" y="139.95535714285714"/>
         </tableViewCell>
     </objects>

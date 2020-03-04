@@ -26,6 +26,8 @@ class ItemFeedVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "ItemCell", bundle: nil), forCellReuseIdentifier: "itemCell")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,11 +59,17 @@ extension ItemFeedVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? ItemCell else {
+            fatalError()
+        }
         let aItem = items[indexPath.row]
-        cell.textLabel?.text = aItem.itemName
-        let price = String(format: "%.2f", aItem.price)
-        cell.detailTextLabel?.text = "@\(aItem.sellerName) price: $\(price)"
+        cell.configureCell(item: aItem)
         return cell
+    }
+}
+
+extension ItemFeedVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
     }
 }
