@@ -122,10 +122,18 @@
                                     <action selector="updatedProfile:" destination="jUD-5M-MzY" eventType="touchUpInside" id="Ncv-t1-4J2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSr-nj-uvM">
+                                <rect key="frame" x="341" y="44" width="60" height="30"/>
+                                <state key="normal" title="Sign Out"/>
+                                <connections>
+                                    <action selector="signOutPressed:" destination="jUD-5M-MzY" eventType="touchUpInside" id="wok-zv-mKV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Qht-iI-YlL" firstAttribute="centerX" secondItem="6Tt-5d-pH6" secondAttribute="centerX" id="5Ie-HL-gOp"/>
+                            <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="FSr-nj-uvM" secondAttribute="trailing" constant="13" id="6va-ID-jpc"/>
                             <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="U7l-Hw-fYM" secondAttribute="trailing" constant="20" id="FXp-0f-tHC"/>
                             <constraint firstItem="Qht-iI-YlL" firstAttribute="top" secondItem="b2S-vW-z0f" secondAttribute="top" constant="40" id="HT0-t7-Upi"/>
                             <constraint firstItem="tcv-a0-Ub6" firstAttribute="centerY" secondItem="6Tt-5d-pH6" secondAttribute="centerY" id="PFF-Yy-Y8a"/>
@@ -133,6 +141,7 @@
                             <constraint firstItem="T6u-zd-B78" firstAttribute="top" secondItem="Qht-iI-YlL" secondAttribute="bottom" constant="20" id="Wzy-2t-STY"/>
                             <constraint firstItem="tcv-a0-Ub6" firstAttribute="centerX" secondItem="6Tt-5d-pH6" secondAttribute="centerX" id="dxr-kZ-EE6"/>
                             <constraint firstItem="U7l-Hw-fYM" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" constant="20" id="fNa-Fu-pcE"/>
+                            <constraint firstItem="FSr-nj-uvM" firstAttribute="top" secondItem="b2S-vW-z0f" secondAttribute="top" id="ggV-Qn-9uZ"/>
                             <constraint firstItem="U7l-Hw-fYM" firstAttribute="top" secondItem="T6u-zd-B78" secondAttribute="bottom" constant="20" id="pad-Mw-1SE"/>
                             <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="T6u-zd-B78" secondAttribute="trailing" constant="20" id="zqV-Aq-txu"/>
                         </constraints>
@@ -143,6 +152,7 @@
                         <outlet property="displayNameTF" destination="T6u-zd-B78" id="zjq-uT-IIV"/>
                         <outlet property="emailLabel" destination="U7l-Hw-fYM" id="h3V-PL-tkf"/>
                         <outlet property="profileImage" destination="Qht-iI-YlL" id="SpC-di-y2A"/>
+                        <outlet property="signOutButton" destination="FSr-nj-uvM" id="Y1v-AN-9jm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAa-L6-9le" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -152,18 +162,59 @@
         <!--Feed-->
         <scene sceneID="tGi-Es-s7A">
             <objects>
-                <viewController id="eeZ-wa-yOp" sceneMemberID="viewController">
+                <viewController id="eeZ-wa-yOp" customClass="ItemFeedVC" customModule="Firebase_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="W2A-C2-Rwp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9b5-U4-E80">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="itemCell" textLabel="bAq-aB-zXV" detailTextLabel="iX2-RL-H1Y" style="IBUITableViewCellStyleSubtitle" id="C4c-NR-HFt">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="C4c-NR-HFt" id="dGz-Cj-CcI">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bAq-aB-zXV">
+                                                    <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iX2-RL-H1Y">
+                                                    <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9b5-U4-E80" firstAttribute="top" secondItem="W2A-C2-Rwp" secondAttribute="top" constant="0.01" id="IbR-qo-Hce"/>
+                            <constraint firstItem="9b5-U4-E80" firstAttribute="trailing" secondItem="TDH-Q9-rVl" secondAttribute="trailing" constant="0.01" id="Pqu-DF-Fy1"/>
+                            <constraint firstItem="9b5-U4-E80" firstAttribute="bottom" secondItem="TDH-Q9-rVl" secondAttribute="bottom" constant="0.01" id="cRC-gt-dFF"/>
+                            <constraint firstItem="9b5-U4-E80" firstAttribute="leading" secondItem="TDH-Q9-rVl" secondAttribute="leading" constant="0.01" id="qIV-26-2nh"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="TDH-Q9-rVl"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Feed" image="safari.fill" catalog="system" id="lBo-9v-h5U"/>
+                    <connections>
+                        <outlet property="tableView" destination="9b5-U4-E80" id="AIt-50-x9Z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cai-A9-NrN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-417" y="-1103"/>
+            <point key="canvasLocation" x="-417.39130434782612" y="-1103.5714285714284"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="d0Q-pB-ugJ">

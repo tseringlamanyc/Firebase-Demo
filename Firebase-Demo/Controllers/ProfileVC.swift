@@ -14,6 +14,7 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var displayNameTF: UITextField!
     @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var signOutButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,10 @@ class ProfileVC: UIViewController {
                 self.showAlert(title: "Success", message: "Changes commited")
             }
         })
+    }
+    
+    
+    @IBAction func signOutPressed(_ sender: UIButton) {
     }
 }
 

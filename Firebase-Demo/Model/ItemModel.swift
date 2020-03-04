@@ -17,3 +17,15 @@ struct Item {
     let sellerId: String
     let category: String
 }
+
+extension Item {
+    init(dictonary: [String: Any]) {
+        self.itemName = dictonary["itemName"] as? String ?? "no itemName"
+        self.price = dictonary["price"] as? Double ?? 0.0
+        self.itemId = dictonary["itemId"] as? String ?? "no itemId"
+        self.listedDate = dictonary["listedDate"] as? Date ?? Date()
+        self.sellerName = dictonary["sellerName"] as? String ?? "no sellerName"
+        self.sellerId = dictonary["sellerId"] as? String ?? "no sellerId"
+        self.category = dictonary["category"] as? String ?? "no category name"
+    }
+}
