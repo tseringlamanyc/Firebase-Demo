@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class CreateItemVC: UIViewController {
     
@@ -14,6 +15,8 @@ class CreateItemVC: UIViewController {
     @IBOutlet weak var itemPriceTF: UITextField!
     
     private var category: Category
+    
+    private let dbService = DatabaseServices()
     
     init?(coder: NSCoder, category: Category) {
         self.category = category
@@ -30,6 +33,27 @@ class CreateItemVC: UIViewController {
     }
     
     @IBAction func createPressed(_ sender: UIBarButtonItem) {
+        guard let itemName = itemNameTF.text, !itemName.isEmpty, let priceText = itemPriceTF.text, !priceText.isEmpty, let price = Double(priceText) else {
+            showAlert(title: "Missing Fields", message: "All fields are required")
+            return
+        }
         
+        guard let displayName = Auth.auth().currentUser?.displayName else {
+            showAlert(title: "Incomplete Profile", message: "Complete proile")
+            return
+        }
+        
+        dbService.createItem(itemName: itemName, price: price, category: category, displayName: displayName) { [weak self](result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Error", message: "Couldnt create item:\(error.localizedDescription)")
+                }
+            case .success:
+                DispatchQueue.main.async {
+                    self?.showAlert(title: nil, message: "Successfully listed the item")
+                }
+            }
+        }
     }
 }
