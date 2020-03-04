@@ -16,6 +16,18 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var signOutButton: UIButton!
     
+    private lazy var imagePickerController: UIImagePickerController = {
+       let ip = UIImagePickerController()
+        ip.delegate = self
+       return ip
+    }()
+    
+    private var selectedImage: UIImage? {
+        didSet {
+            profileImage.image = selectedImage
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         displayNameTF.delegate = self
@@ -52,8 +64,14 @@ class ProfileVC: UIViewController {
     
     @IBAction func editPhoto(_ sender: UIButton) {
         let alterController = UIAlertController(title: "Photo Option", message: nil, preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: nil)
-        let photoLibrary = UIAlertAction(title: "Library", style: .default, handler: nil)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { alertAction in
+            self.imagePickerController.sourceType = .camera
+            self.present(self.imagePickerController, animated: true)
+        }
+        let photoLibrary = UIAlertAction(title: "Library", style: .default) { alterAction in
+            self.imagePickerController.sourceType = .photoLibrary
+            self.present(self.imagePickerController, animated: true)
+        }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             alterController.addAction(cameraAction)
@@ -72,5 +90,15 @@ extension ProfileVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
+        }
+        selectedImage = image
+        dismiss(animated: true)
     }
 }

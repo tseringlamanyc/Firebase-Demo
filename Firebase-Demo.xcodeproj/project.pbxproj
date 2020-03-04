@@ -23,6 +23,8 @@
 		525ECDC22409753C00D0245C /* AuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525ECDC12409753C00D0245C /* AuthSession.swift */; };
 		52CF6005240FFDEF00F842C4 /* ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52CF6004240FFDEF00F842C4 /* ItemCell.xib */; };
 		52CF6007240FFE1500F842C4 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF6006240FFE1500F842C4 /* ItemCell.swift */; };
+		52CF600924100AF000F842C4 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF600824100AF000F842C4 /* UIImage.swift */; };
+		52CF600B24100DCE00F842C4 /* Storage Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF600A24100DCE00F842C4 /* Storage Services.swift */; };
 		57845ACD24092D4300F35651 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57845ACC24092D4300F35651 /* AppDelegate.swift */; };
 		57845ACF24092D4300F35651 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57845ACE24092D4300F35651 /* SceneDelegate.swift */; };
 		57845AD124092D4300F35651 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57845AD024092D4300F35651 /* LoginViewController.swift */; };
@@ -64,6 +66,8 @@
 		525ECDC12409753C00D0245C /* AuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSession.swift; sourceTree = "<group>"; };
 		52CF6004240FFDEF00F842C4 /* ItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemCell.xib; sourceTree = "<group>"; };
 		52CF6006240FFE1500F842C4 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		52CF600824100AF000F842C4 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		52CF600A24100DCE00F842C4 /* Storage Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Storage Services.swift"; sourceTree = "<group>"; };
 		57845AC924092D4300F35651 /* Firebase-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Firebase-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		57845ACC24092D4300F35651 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57845ACE24092D4300F35651 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 			children = (
 				523933B6240D5F9C006676C5 /* VC + Navigation .swift */,
 				523933B8240D5FDA006676C5 /* VC + Alert.swift */,
+				52CF600824100AF000F842C4 /* UIImage.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -127,6 +132,7 @@
 			children = (
 				525ECDC12409753C00D0245C /* AuthSession.swift */,
 				523933C3240D7E71006676C5 /* DatabaseService.swift */,
+				52CF600A24100DCE00F842C4 /* Storage Services.swift */,
 			);
 			path = "FIrebase Services";
 			sourceTree = "<group>";
@@ -418,6 +424,7 @@
 				523933B7240D5F9C006676C5 /* VC + Navigation .swift in Sources */,
 				523933B9240D5FDA006676C5 /* VC + Alert.swift in Sources */,
 				523933BB240D756E006676C5 /* CategoryCell.swift in Sources */,
+				52CF600B24100DCE00F842C4 /* Storage Services.swift in Sources */,
 				57845AD124092D4300F35651 /* LoginViewController.swift in Sources */,
 				57845ACD24092D4300F35651 /* AppDelegate.swift in Sources */,
 				523933B0240D5F41006676C5 /* SellItemVC.swift in Sources */,
@@ -428,6 +435,7 @@
 				523933AC240D5F07006676C5 /* TabBarController.swift in Sources */,
 				525ECDC22409753C00D0245C /* AuthSession.swift in Sources */,
 				57845ACF24092D4300F35651 /* SceneDelegate.swift in Sources */,
+				52CF600924100AF000F842C4 /* UIImage.swift in Sources */,
 				523933BE240D7728006676C5 /* CategoryModel.swift in Sources */,
 				523933AE240D5F36006676C5 /* ItemFeedVC.swift in Sources */,
 			);
