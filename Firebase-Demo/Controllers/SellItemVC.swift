@@ -36,7 +36,8 @@ extension SellItemVC: UICollectionViewDataSource {
     }
 }
 
-extension SellItemVC: UICollectionViewDelegateFlowLayout {
+extension SellItemVC: UICollectionViewDelegateFlowLayout
+{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let maxSize: CGSize = UIScreen.main.bounds.size
         let spaceBetween: CGFloat = 11
@@ -51,5 +52,12 @@ extension SellItemVC: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mainViewSB = UIStoryboard(name: "MainView", bundle: nil)
+        let aCategory = categories[indexPath.row]
+        let createItemVC = mainViewSB.instantiateViewController(identifier: "CreateItemVC") { coder in
+            return CreateItemVC(coder: coder, category: aCategory)
+        }
+        present(UINavigationController(rootViewController: createItemVC), animated: true)
+    }
 }

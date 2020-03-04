@@ -184,11 +184,76 @@
             </objects>
             <point key="canvasLocation" x="-1337" y="-297"/>
         </scene>
+        <!--Create ItemVC-->
+        <scene sceneID="GEY-0W-rPl">
+            <objects>
+                <viewController storyboardIdentifier="CreateItemVC" id="tKu-Te-tor" customClass="CreateItemVC" customModule="Firebase_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q1S-5y-q0X">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of the item " textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EnN-s9-UKj">
+                                <rect key="frame" x="20" y="108" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price of item" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="csJ-FD-bM4">
+                                <rect key="frame" x="20" y="162" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="csJ-FD-bM4" firstAttribute="top" secondItem="EnN-s9-UKj" secondAttribute="bottom" constant="20" id="4Lf-cC-5lN"/>
+                            <constraint firstItem="EnN-s9-UKj" firstAttribute="top" secondItem="umr-kr-0DM" secondAttribute="top" constant="20" id="8tB-rc-jq9"/>
+                            <constraint firstItem="csJ-FD-bM4" firstAttribute="leading" secondItem="umr-kr-0DM" secondAttribute="leading" constant="20" id="MXJ-gH-dn8"/>
+                            <constraint firstItem="EnN-s9-UKj" firstAttribute="leading" secondItem="umr-kr-0DM" secondAttribute="leading" constant="20" id="Qgu-NU-9KA"/>
+                            <constraint firstItem="umr-kr-0DM" firstAttribute="trailing" secondItem="csJ-FD-bM4" secondAttribute="trailing" constant="20" id="SlN-2f-ZdI"/>
+                            <constraint firstItem="umr-kr-0DM" firstAttribute="trailing" secondItem="EnN-s9-UKj" secondAttribute="trailing" constant="20" id="zi4-z2-vov"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="umr-kr-0DM"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cgh-ou-5t4">
+                        <barButtonItem key="rightBarButtonItem" image="plus.app.fill" catalog="system" id="1Er-M4-hsl">
+                            <connections>
+                                <action selector="createPressed:" destination="tKu-Te-tor" id="iCh-I7-FlY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="itemNameTF" destination="EnN-s9-UKj" id="qDM-EH-uD5"/>
+                        <outlet property="itemPriceTF" destination="csJ-FD-bM4" id="QBE-8s-0yG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FeH-Sq-4Rr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1508.6956521739132" y="-289.28571428571428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lYY-In-a6s">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Fit-n8-nS1" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gPu-rE-DcP">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tKu-Te-tor" kind="relationship" relationship="rootViewController" id="ehJ-LA-aiM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6QE-iA-7bd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="598.55072463768124" y="-289.28571428571428"/>
+        </scene>
     </scenes>
     <resources>
         <image name="dollarsign.square.fill" catalog="system" width="64" height="56"/>
         <image name="person.circle.fill" catalog="system" width="64" height="60"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
+        <image name="plus.app.fill" catalog="system" width="64" height="56"/>
         <image name="safari.fill" catalog="system" width="64" height="60"/>
     </resources>
 </document>
