@@ -28,6 +28,8 @@ class ProfileVC: UIViewController {
         }
     }
     
+    private let storageService = StorageServices()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         displayNameTF.delegate = self
@@ -47,12 +49,30 @@ class ProfileVC: UIViewController {
     @IBAction func updatedProfile(_ sender: UIButton) {
         // change the users display name
         // make a request to change
-        guard let displayName = displayNameTF.text, !displayName.isEmpty else {
+        guard let displayName = displayNameTF.text, !displayName.isEmpty, let selectedImage = selectedImage else {
             print("missing fields")
             return
         }
+        
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        
+        // resize image before uploading
+        let resizeImage = UIImage.resizeImage(originalImage: selectedImage, rect: profileImage.bounds)
+        
+        print("\(resizeImage)")
+        
+        storageService.uploadPhoto(userId: user.uid, image: resizeImage) { (result) in
+            
+        }
+        
         let request = Auth.auth().currentUser?.createProfileChangeRequest()
+        
         request?.displayName = displayName
+        
+        
+        
         request?.commitChanges(completion: { [unowned self] (error) in
             if let error = error {
                 self.showAlert(title: "Error", message: "Couldnt commit changes: \(error)")
@@ -64,14 +84,17 @@ class ProfileVC: UIViewController {
     
     @IBAction func editPhoto(_ sender: UIButton) {
         let alterController = UIAlertController(title: "Photo Option", message: nil, preferredStyle: .actionSheet)
+        
         let cameraAction = UIAlertAction(title: "Camera", style: .default) { alertAction in
             self.imagePickerController.sourceType = .camera
             self.present(self.imagePickerController, animated: true)
         }
+        
         let photoLibrary = UIAlertAction(title: "Library", style: .default) { alterAction in
             self.imagePickerController.sourceType = .photoLibrary
             self.present(self.imagePickerController, animated: true)
         }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             alterController.addAction(cameraAction)
