@@ -33,6 +33,7 @@ class CreateItemVC: UIViewController {
     
     private lazy var longPressGesture: UILongPressGestureRecognizer = {
         let gesture = UILongPressGestureRecognizer()
+        gesture.addTarget(self, action: #selector(showPhotoOptions))
         return gesture
     }()
     
@@ -104,5 +105,6 @@ class CreateItemVC: UIViewController {
                 fatalError()
             }
             selectedImage = image
+            dismiss(animated: true)
         }
 }
