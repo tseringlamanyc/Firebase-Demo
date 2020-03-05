@@ -16,6 +16,7 @@ struct Item {
     let sellerName: String
     let sellerId: String
     let category: String
+    let imageURL: String
 }
 
 extension Item {
@@ -27,5 +28,6 @@ extension Item {
         self.sellerName = dictonary["sellerName"] as? String ?? "no sellerName"
         self.sellerId = dictonary["sellerId"] as? String ?? "no sellerId"
         self.category = dictonary["category"] as? String ?? "no category name"
+        self.imageURL = dictonary["imageURL"] as? String ?? "no imageURL"
     }
 }
