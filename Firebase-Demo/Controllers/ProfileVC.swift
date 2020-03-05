@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import Kingfisher
 
 class ProfileVC: UIViewController {
     
@@ -17,9 +18,9 @@ class ProfileVC: UIViewController {
     @IBOutlet weak var signOutButton: UIButton!
     
     private lazy var imagePickerController: UIImagePickerController = {
-       let ip = UIImagePickerController()
+        let ip = UIImagePickerController()
         ip.delegate = self
-       return ip
+        return ip
     }()
     
     private var selectedImage: UIImage? {
@@ -43,6 +44,7 @@ class ProfileVC: UIViewController {
         // user - displayName, email, phonenumber, photoURL
         emailLabel.text = user.email
         displayNameTF.text = user.displayName
+        profileImage.kf.setImage(with: user.photoURL)
     }
     
     
@@ -63,23 +65,33 @@ class ProfileVC: UIViewController {
         
         print("\(resizeImage)")
         
-        storageService.uploadPhoto(userId: user.uid, image: resizeImage) { (result) in
-            
-        }
-        
-        let request = Auth.auth().currentUser?.createProfileChangeRequest()
-        
-        request?.displayName = displayName
-        
-        
-        
-        request?.commitChanges(completion: { [unowned self] (error) in
-            if let error = error {
-                self.showAlert(title: "Error", message: "Couldnt commit changes: \(error)")
-            } else {
-                self.showAlert(title: "Success", message: "Changes commited")
+        storageService.uploadPhoto(userId: user.uid, image: resizeImage) { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Error updating", message: "\(error.localizedDescription)")
+                }
+            case .success(let url):
+                
+                let request = Auth.auth().currentUser?.createProfileChangeRequest()
+                
+                request?.displayName = displayName
+                
+                request?.photoURL = url
+                
+                request?.commitChanges(completion: { [unowned self] (error) in
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            self?.showAlert(title: "Error", message: "Couldnt commit changes: \(error.localizedDescription)")
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self?.showAlert(title: "Success", message: "Changes commited")
+                        }
+                    }
+                })
             }
-        })
+        }
     }
     
     @IBAction func editPhoto(_ sender: UIButton) {
@@ -105,7 +117,14 @@ class ProfileVC: UIViewController {
     }
     
     @IBAction func signOutPressed(_ sender: UIButton) {
-
+        do {
+            try Auth.auth().signOut()
+            UIViewController.showVC(storyboard: "LoginView", VCid: "LoginViewController")
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Error", message: "Couldnt signout \(error.localizedDescription)")
+            }
+        }
     }
 }
 

@@ -27,7 +27,7 @@ class StorageServices {
         var photoReference: StorageReference!
         
         if let userId = userId {
-            photoReference = storageRef.child("UserProfilePhotos/\(userId).jpg)")
+            photoReference = storageRef.child("UserProfilePhotos/\(userId).jpg")
         } else if let itemId = itemId {
             photoReference = storageRef.child("ItemPhotos/\(itemId).jpg")
         }
@@ -35,7 +35,7 @@ class StorageServices {
         // configure metadata for the object being uploaded
         let metadata = StorageMetadata()  // download url
         
-        metadata.contentType = "Image/jpg"
+        metadata.contentType = "image/jpg"  // MIME type
         
         let _ = photoReference.putData(imageData, metadata: metadata) { (metadata, error) in
             if let error = error {
