@@ -8,12 +8,17 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseFirestore
 
 class ItemFeedVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
     private var listener: ListenerRegistration?
+    
+    private let storageService = StorageServices()
+    
+    private let db = DatabaseServices()
     
     private var items = [Item]() {
         didSet {
@@ -51,11 +56,35 @@ class ItemFeedVC: UIViewController {
         super.viewWillDisappear(true)
         listener?.remove()
     }
+    
+   
 }
 
 extension ItemFeedVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .insert:
+            print("inserting")
+        case .delete:
+            // Create a reference to the file to delete
+            let item = items[indexPath.row]
+            db.deleteItem(item: item) { [weak self](result) in
+                switch result {
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Error", message: "Couldnt delete \(error.localizedDescription)")
+                    }
+                case .success(_):
+                    print("deleted yerrr......")
+                }
+            }
+        default:
+            break
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -31,6 +31,8 @@ class ProfileVC: UIViewController {
     
     private let storageService = StorageServices()
     
+    private let dataBaseService = DatabaseServices()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         displayNameTF.delegate = self
@@ -73,6 +75,8 @@ class ProfileVC: UIViewController {
                 }
             case .success(let url):
                 
+                self?.updateDataBaseUser(displayName: displayName, photoURL: url.absoluteString)
+                
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 
                 request?.displayName = displayName
@@ -93,6 +97,18 @@ class ProfileVC: UIViewController {
             }
         }
     }
+    
+    private func updateDataBaseUser(displayName: String, photoURL: String) {
+        dataBaseService.updateDataBaseUser(displayName: displayName, photoURL: photoURL) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(_):
+                print("success")
+            }
+        }
+    }
+
     
     @IBAction func editPhoto(_ sender: UIButton) {
         let alterController = UIAlertController(title: "Photo Option", message: nil, preferredStyle: .actionSheet)
