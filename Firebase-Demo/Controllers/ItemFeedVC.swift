@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
-import FirebaseFirestore
+import FirebaseAuth
 
 class ItemFeedVC: UIViewController {
     
@@ -56,23 +56,29 @@ class ItemFeedVC: UIViewController {
         super.viewWillDisappear(true)
         listener?.remove()
     }
-    
-   
 }
 
 extension ItemFeedVC: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
+        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? ItemCell else {
+            fatalError()
+        }
+        let aItem = items[indexPath.row]
+        cell.configureCell(item: aItem)
+        return cell
+    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .insert:
-            print("inserting")
-        case .delete:
+
+        if editingStyle == .delete {
             // Create a reference to the file to delete
             let item = items[indexPath.row]
-            db.deleteItem(item: item) { [weak self](result) in
+            db.deleteItem(item: item) { [weak self] (result) in
                 switch result {
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -82,18 +88,19 @@ extension ItemFeedVC: UITableViewDataSource {
                     print("deleted yerrr......")
                 }
             }
-        default:
-            break
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? ItemCell else {
-            fatalError()
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let item = items[indexPath.row]
+        
+        guard let user = Auth.auth().currentUser else {return false}
+        
+        if item.sellerId != user.uid {
+            return false
+        } else {
+            return true
         }
-        let aItem = items[indexPath.row]
-        cell.configureCell(item: aItem)
-        return cell
     }
 }
 
@@ -101,4 +108,15 @@ extension ItemFeedVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "MainView", bundle: nil)
+        let item = items[indexPath.row]
+        let detailVC = storyboard.instantiateViewController(identifier: "DetailVC") { (coder)  in
+            return DetailVC(coder: coder, item: item)
+        }
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
 }

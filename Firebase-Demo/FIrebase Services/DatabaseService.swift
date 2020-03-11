@@ -81,4 +81,21 @@ class DatabaseServices {
             }
         }
     }
+    
+    public func postComment(comment: String, item: Item,completion: @escaping (Result<Bool, Error>) -> ()) {
+        
+        guard let user = Auth.auth().currentUser, let displayName = user.displayName else {
+            print("missing username")
+            return
+        }
+        
+        let docRef = db.collection(DatabaseServices.itemsCollection).document(item.itemId).collection(DatabaseServices.commentsCollection).document()
+        db.collection(DatabaseServices.itemsCollection).document(item.itemId).collection(DatabaseServices.commentsCollection).document(docRef.documentID).setData(["comment" : comment, "createdDate": Timestamp(date: Date()), "itemName": item.itemName, "itemId": item.itemId, "sellerName": item.sellerName, "commentedBy": displayName]) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
+    }
 }

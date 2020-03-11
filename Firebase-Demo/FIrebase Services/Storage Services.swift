@@ -35,7 +35,7 @@ class StorageServices {
         // configure metadata for the object being uploaded
         let metadata = StorageMetadata()  // download url
         
-        metadata.contentType = "image/jpg"  // MIME type
+        metadata.contentType = "image/jpg"  // MIME type  "video/mp4"
         
         let _ = photoReference.putData(imageData, metadata: metadata) { (metadata, error) in
             if let error = error {
