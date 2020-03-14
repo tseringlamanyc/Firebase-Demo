@@ -14,7 +14,8 @@ class DatabaseServices {
     
     static let itemsCollection = "items" // collection
     static let userCollection = "users"
-    static let commentsCollection = "comments"
+    static let commentsCollection = "comments"  // sub collection on items
+    static let favCollection = "favorites" // sub collection on users
     
     // Collection -> documents -> collection -> documents
     
@@ -49,14 +50,14 @@ class DatabaseServices {
         }
         
         db.collection(DatabaseServices.userCollection).document(authDataResult.user.uid).setData(
-        ["email" : email,
-         "createdDate": Date(),
-         "userId": authDataResult.user.uid]) { (error) in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(true))
-            }
+            ["email" : email,
+             "createdDate": Date(),
+             "userId": authDataResult.user.uid]) { (error) in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(true))
+                }
         }
     }
     
@@ -100,11 +101,66 @@ class DatabaseServices {
             "itemId": item.itemId,
             "sellerName": item.sellerName,
             "commentedBy": displayName])
-            { (error) in
+        { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {
                 completion(.success(true))
+            }
+        }
+    }
+    
+    public func addToFav(item: Item, completion: @escaping (Result<Bool, Error>) -> ()) {
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        db.collection(DatabaseServices.userCollection).document(user.uid).collection(DatabaseServices.favCollection).document(item.itemId).setData(
+            ["itemName" : item.itemName,
+             "price": item.price,
+             "imageURL": item.imageURL,
+             "favoritedDate": Timestamp(date: Date()),
+             "itemId": item.itemId,
+             "sellerName": item.sellerName,
+             "sellerId": item.sellerId]) { (error) in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(true))
+                }
+        }
+    }
+    
+    public func removeFav(item: Item, completion: @escaping (Result<Bool, Error>) -> ()) {
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        db.collection(DatabaseServices.userCollection).document(user.uid).collection(DatabaseServices.favCollection).document(item.itemId).delete() { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
+    }
+    
+    public func isFav(item: Item, completion: @escaping (Result<Bool, Error>) -> ()) {
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        
+        // "where" to search / query collection
+        // addsnapshot - continues to listen
+        // getDocuments - only once
+        db.collection(DatabaseServices.userCollection).document(user.uid).collection(DatabaseServices.favCollection).whereField("itemId", isEqualTo: item.itemId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot {
+                let count = snapshot.documents.count
+                if count > 0 {
+                    completion(.success(true))
+                } else {
+                    completion(.success(false))
+                }
             }
         }
     }

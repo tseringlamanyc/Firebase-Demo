@@ -74,7 +74,7 @@ class DetailVC: UIViewController {
                 
             } else if let snapshot = snapshot {
                 let comments = snapshot.documents.map { Comment(dictonary: $0.data()) }
-                self?.comments = comments.sorted {$0.commentDate.dateValue() < $1.commentDate.dateValue() }
+                self?.comments = comments.sorted {$0.commentDate.dateValue() > $1.commentDate.dateValue() } // new on top
             }
         })
     }
@@ -141,6 +141,23 @@ class DetailVC: UIViewController {
         }
     }
     
+    
+    @IBAction func favPressed(_ sender: UIBarButtonItem) {
+        
+        DatabaseServices.shared.addToFav(item: item) { [weak self](result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Fail", message: "Couldnt favorite: \(error.localizedDescription)")
+                }
+            case .success(_):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Success", message: nil)
+                }
+            }
+        }
+        
+    }
 }
 
 extension DetailVC: UITableViewDataSource {
