@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class SellerVC: UIViewController {
     
@@ -33,12 +34,46 @@ class SellerVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.tableHeaderView = HeaderView(imageURL: item.imageURL)
         tableView.register(UINib(nibName: "ItemCell", bundle: nil), forCellReuseIdentifier: "itemCell")
+        fetchItems()
+        getUserPhoto()
+    }
+    
+    private func fetchItems() {
+        DatabaseServices.shared.fetchUserItems(userId: item.sellerId) { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Fail to get", message: "\(error.localizedDescription)")
+                }
+            case .success(let items):
+                self?.items = items
+            }
+        }
+    }
+    
+    private func getUserPhoto() {
+        Firestore.firestore().collection(DatabaseServices.userCollection).document(item.sellerId).getDocument { [weak self] (snapshot, error) in
+            if let error = error {
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Fail", message: error.localizedDescription)
+                }
+            } else if let snapshot = snapshot {
+                if let imageURL = snapshot.data()?["photoURL"] as? String {
+                    DispatchQueue.main.async {
+                        self?.tableView.tableHeaderView = HeaderView(imageURL: imageURL)
+                    }
+                }
+            }
+        }
     }
 }
 
 extension SellerVC: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
@@ -51,6 +86,10 @@ extension SellerVC: UITableViewDataSource {
         cell.configureCell(item: aItem)
         return cell
     }
-    
-    
+}
+
+extension SellerVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
 }

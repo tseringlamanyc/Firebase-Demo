@@ -29,12 +29,6 @@ class DetailVC: UIViewController {
         }
     }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d, h:mm a"
-        return formatter
-    }()
-    
     private var isFavorite = false {
         didSet {
             if isFavorite {
@@ -215,7 +209,7 @@ extension DetailVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell", for: indexPath)
         let aComment = comments[indexPath.row]
-        let dateString = dateFormatter.string(from: aComment.commentDate.dateValue())
+        let dateString = aComment.commentDate.dateValue().dateString()
         cell.textLabel?.text = aComment.comment
         cell.detailTextLabel?.text = aComment.commentedBy + " " + dateString
         return cell

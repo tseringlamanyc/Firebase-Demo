@@ -118,12 +118,15 @@ extension ItemFeedVC: UITableViewDelegate {
         }
         navigationController?.pushViewController(detailVC, animated: true)
     }
-    
 }
 
 extension ItemFeedVC: ItemCellDelegate {
     
     func didTapName(itemCell: ItemCell, item: Item) {
-        print("")
+       let storyboard = UIStoryboard(name: "MainView", bundle: nil)
+        let sellerVC = storyboard.instantiateViewController(identifier: "SellerVC") { (coder) in
+            return SellerVC(coder: coder, item: item)
+        }
+        navigationController?.pushViewController(sellerVC, animated: true)
     }
 }

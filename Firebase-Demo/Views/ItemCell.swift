@@ -57,7 +57,7 @@ class ItemCell: UITableViewCell {
         itemImage.kf.setImage(with: URL(string: imageURL))
         itemLabel.text = itemName
         sellerName.text = "@\(sellerNames)"
-//        dateLabel.text = date.dateValue().dateString()
+        dateLabel.text = date.dateValue().dateString()
         let price = String(format: "%.2f", price)
         priceLabel.text = "$\(price)"
       }
