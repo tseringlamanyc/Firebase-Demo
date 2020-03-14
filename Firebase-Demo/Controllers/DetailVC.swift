@@ -30,10 +30,20 @@ class DetailVC: UIViewController {
     }
     
     private lazy var dateFormatter: DateFormatter = {
-       let formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMM d, h:mm a"
-       return formatter
+        return formatter
     }()
+    
+    private var isFavorite = false {
+        didSet {
+            if isFavorite {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+            } else {
+                navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+            }
+        }
+    }
     
     private lazy var tapGesture: UITapGestureRecognizer = {
         let tp = UITapGestureRecognizer()
@@ -60,6 +70,7 @@ class DetailVC: UIViewController {
         tableView.tableHeaderView = HeaderView(imageURL: item.imageURL)
         originalBottomValue = bottomConstraint.constant
         view.addGestureRecognizer(tapGesture)
+        updateUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,6 +94,24 @@ class DetailVC: UIViewController {
         super.viewWillDisappear(true)
         unregisterKeyboardNotification()
         listener?.remove()
+    }
+    
+    private func updateUI() {
+        // check if item is favorited
+        DatabaseServices.shared.isFav(item: item) { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Try again", message: "\(error.localizedDescription)")
+                }
+            case .success(let success):
+                if success {
+                    self?.isFavorite = true
+                } else {
+                    self?.isFavorite = false
+                }
+            }
+        }
     }
     
     private func registerKeyboardNotification() {
@@ -144,15 +173,32 @@ class DetailVC: UIViewController {
     
     @IBAction func favPressed(_ sender: UIBarButtonItem) {
         
-        DatabaseServices.shared.addToFav(item: item) { [weak self](result) in
-            switch result {
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self?.showAlert(title: "Fail", message: "Couldnt favorite: \(error.localizedDescription)")
+        if isFavorite {  // already fav
+            DatabaseServices.shared.removeFav(item: item) { [weak self] (result) in
+                switch result {
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Fail", message: "Couldnt favorite: \(error.localizedDescription)")
+                    }
+                case .success(_):
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Success", message: "item removed")
+                        self?.isFavorite = false 
+                    }
                 }
-            case .success(_):
-                DispatchQueue.main.async {
-                    self?.showAlert(title: "Success", message: nil)
+            }
+        } else {  // not in fav
+            DatabaseServices.shared.addToFav(item: item) { [weak self](result) in
+                switch result {
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Fail", message: "Couldnt favorite: \(error.localizedDescription)")
+                    }
+                case .success(_):
+                    DispatchQueue.main.async {
+                        self?.showAlert(title: "Success", message: nil)
+                        self?.isFavorite = true
+                    }
                 }
             }
         }

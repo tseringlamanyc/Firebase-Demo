@@ -114,16 +114,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcv-a0-Ub6">
-                                <rect key="frame" x="158" y="433" width="98" height="30"/>
-                                <state key="normal" title="Update Profile"/>
-                                <connections>
-                                    <action selector="updatedProfile:" destination="jUD-5M-MzY" eventType="touchUpInside" id="Ncv-t1-4J2"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSr-nj-uvM">
                                 <rect key="frame" x="341" y="44" width="60" height="30"/>
-                                <state key="normal" title="Sign Out"/>
+                                <state key="normal" title="Sign Out">
+                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="signOutPressed:" destination="jUD-5M-MzY" eventType="touchUpInside" id="wok-zv-mKV"/>
                                 </connections>
@@ -140,22 +135,53 @@
                                     <action selector="editPhoto:" destination="jUD-5M-MzY" eventType="touchUpInside" id="ffp-Iz-EGP"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Y86-71-lVZ">
+                                <rect key="frame" x="20" y="317" width="374" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="YFG-Kz-Ee7"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="My Items"/>
+                                    <segment title="Favories"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedPressed:" destination="jUD-5M-MzY" eventType="valueChanged" id="nDv-Bo-Jyd"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bBL-7O-edh">
+                                <rect key="frame" x="0.0" y="369" width="414" height="444"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcv-a0-Ub6">
+                                <rect key="frame" x="20" y="44" width="98" height="30"/>
+                                <state key="normal" title="Update Profile"/>
+                                <connections>
+                                    <action selector="updatedProfile:" destination="jUD-5M-MzY" eventType="touchUpInside" id="Ncv-t1-4J2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="tcv-a0-Ub6" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" constant="20" id="1jz-be-bDa"/>
+                            <constraint firstItem="Y86-71-lVZ" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" constant="20" id="4kZ-ZF-loU"/>
                             <constraint firstItem="Qht-iI-YlL" firstAttribute="centerX" secondItem="6Tt-5d-pH6" secondAttribute="centerX" id="5Ie-HL-gOp"/>
+                            <constraint firstItem="bBL-7O-edh" firstAttribute="top" secondItem="Y86-71-lVZ" secondAttribute="bottom" constant="8" symbolic="YES" id="5Se-uX-BHA"/>
                             <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="FSr-nj-uvM" secondAttribute="trailing" constant="13" id="6va-ID-jpc"/>
+                            <constraint firstItem="tcv-a0-Ub6" firstAttribute="centerY" secondItem="FSr-nj-uvM" secondAttribute="centerY" id="ATe-ib-ijO"/>
                             <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="U7l-Hw-fYM" secondAttribute="trailing" constant="20" id="FXp-0f-tHC"/>
+                            <constraint firstItem="bBL-7O-edh" firstAttribute="bottom" secondItem="b2S-vW-z0f" secondAttribute="bottom" id="Ghg-gk-Ljg"/>
                             <constraint firstItem="Qht-iI-YlL" firstAttribute="top" secondItem="b2S-vW-z0f" secondAttribute="top" constant="40" id="HT0-t7-Upi"/>
                             <constraint firstItem="0mp-7L-S9b" firstAttribute="centerY" secondItem="Qht-iI-YlL" secondAttribute="centerY" id="Lm0-FC-8Nc"/>
-                            <constraint firstItem="tcv-a0-Ub6" firstAttribute="centerY" secondItem="6Tt-5d-pH6" secondAttribute="centerY" id="PFF-Yy-Y8a"/>
                             <constraint firstItem="T6u-zd-B78" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" constant="20" id="VFy-xG-4fJ"/>
                             <constraint firstItem="T6u-zd-B78" firstAttribute="top" secondItem="Qht-iI-YlL" secondAttribute="bottom" constant="20" id="Wzy-2t-STY"/>
-                            <constraint firstItem="tcv-a0-Ub6" firstAttribute="centerX" secondItem="6Tt-5d-pH6" secondAttribute="centerX" id="dxr-kZ-EE6"/>
+                            <constraint firstItem="Y86-71-lVZ" firstAttribute="top" secondItem="U7l-Hw-fYM" secondAttribute="bottom" constant="8" id="bdb-Rd-Wqd"/>
+                            <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="Y86-71-lVZ" secondAttribute="trailing" constant="20" id="eER-h8-WId"/>
                             <constraint firstItem="U7l-Hw-fYM" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" constant="20" id="fNa-Fu-pcE"/>
                             <constraint firstItem="FSr-nj-uvM" firstAttribute="top" secondItem="b2S-vW-z0f" secondAttribute="top" id="ggV-Qn-9uZ"/>
+                            <constraint firstItem="bBL-7O-edh" firstAttribute="leading" secondItem="b2S-vW-z0f" secondAttribute="leading" id="lXv-OP-sLG"/>
                             <constraint firstItem="0mp-7L-S9b" firstAttribute="leading" secondItem="Qht-iI-YlL" secondAttribute="trailing" constant="8" id="mE7-eh-fuF"/>
                             <constraint firstItem="U7l-Hw-fYM" firstAttribute="top" secondItem="T6u-zd-B78" secondAttribute="bottom" constant="20" id="pad-Mw-1SE"/>
+                            <constraint firstItem="bBL-7O-edh" firstAttribute="trailing" secondItem="b2S-vW-z0f" secondAttribute="trailing" id="yU9-rA-Vip"/>
                             <constraint firstItem="b2S-vW-z0f" firstAttribute="trailing" secondItem="T6u-zd-B78" secondAttribute="trailing" constant="20" id="zqV-Aq-txu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b2S-vW-z0f"/>
@@ -166,6 +192,7 @@
                         <outlet property="emailLabel" destination="U7l-Hw-fYM" id="h3V-PL-tkf"/>
                         <outlet property="profileImage" destination="Qht-iI-YlL" id="SpC-di-y2A"/>
                         <outlet property="signOutButton" destination="FSr-nj-uvM" id="Y1v-AN-9jm"/>
+                        <outlet property="tableView" destination="bBL-7O-edh" id="wxG-VN-8Tr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAa-L6-9le" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

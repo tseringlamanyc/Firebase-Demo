@@ -10,12 +10,18 @@ import UIKit
 import FirebaseAuth
 import Kingfisher
 
+enum ViewState {
+    case myItems
+    case myFav
+}
+
 class ProfileVC: UIViewController {
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var displayNameTF: UITextField!
     @IBOutlet weak var emailLabel: UILabel!
     @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     private lazy var imagePickerController: UIImagePickerController = {
         let ip = UIImagePickerController()
@@ -31,11 +37,29 @@ class ProfileVC: UIViewController {
     
     private let storageService = StorageServices()
     
+    private var viewState: ViewState = .myItems {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    private var myFav = [Int]() {
+        didSet {
+            
+        }
+    }
+    
+    private var myItems = [Item]() {
+        didSet {
+            
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         displayNameTF.delegate = self
         updateUI()
+        tableView.dataSource = self
     }
     
     private func updateUI() {
@@ -141,6 +165,18 @@ class ProfileVC: UIViewController {
             }
         }
     }
+    
+    
+    @IBAction func segmentedPressed(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            viewState = .myItems
+        case 1:
+            viewState = .myFav
+        default:
+            break
+        }
+    }
 }
 
 extension ProfileVC: UITextFieldDelegate {
@@ -158,4 +194,31 @@ extension ProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDele
         selectedImage = image
         dismiss(animated: true)
     }
+}
+
+extension ProfileVC: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if viewState == .myItems {
+            return myItems.count
+        } else {
+            return myFav.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as? ItemCell else {
+            fatalError()
+        }
+        if viewState == .myItems {
+            let aItem = myItems[indexPath.row]
+            cell.configureCell(item: aItem)
+        } else {
+            let aFav = myFav[indexPath.row]
+            
+        }
+        return cell
+    }
+    
+    
 }
