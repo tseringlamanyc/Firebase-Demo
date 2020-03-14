@@ -93,7 +93,14 @@ class DatabaseServices {
         }
         
         let docRef = db.collection(DatabaseServices.itemsCollection).document(item.itemId).collection(DatabaseServices.commentsCollection).document()
-        db.collection(DatabaseServices.itemsCollection).document(item.itemId).collection(DatabaseServices.commentsCollection).document(docRef.documentID).setData(["comment" : comment, "createdDate": Timestamp(date: Date()), "itemName": item.itemName, "itemId": item.itemId, "sellerName": item.sellerName, "commentedBy": displayName]) { (error) in
+        db.collection(DatabaseServices.itemsCollection).document(item.itemId).collection(DatabaseServices.commentsCollection).document(docRef.documentID).setData([
+            "comment" : comment,
+            "commentDate": Timestamp(date: Date()),
+            "itemName": item.itemName,
+            "itemId": item.itemId,
+            "sellerName": item.sellerName,
+            "commentedBy": displayName])
+            { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {

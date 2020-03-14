@@ -20,8 +20,8 @@ struct Comment {
 
 extension Comment {
     init(dictonary: [String: Any]) {
-        self.commentDate = dictonary["commentData"] as? Timestamp ?? Timestamp(date: Date())
-        self.commentedBy = dictonary["commentedby"] as? String ?? "no commentedBy"
+        self.commentDate = dictonary["commentDate"] as? Timestamp ?? Timestamp(date: Date())
+        self.commentedBy = dictonary["commentedBy"] as? String ?? "no commentedBy"
         self.itemId = dictonary["itemId"] as? String ?? "no itemId"
         self.itemName = dictonary["itemName"] as? String ?? "no itemName"
         self.sellerName = dictonary["sellerName"] as? String ?? "no sellerName"
