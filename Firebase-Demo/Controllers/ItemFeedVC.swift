@@ -68,6 +68,7 @@ extension ItemFeedVC: UITableViewDataSource {
         }
         let aItem = items[indexPath.row]
         cell.configureCell(item: aItem)
+        cell.delegate = self
         return cell
     }
     
@@ -118,4 +119,11 @@ extension ItemFeedVC: UITableViewDelegate {
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
+}
+
+extension ItemFeedVC: ItemCellDelegate {
+    
+    func didTapName(itemCell: ItemCell, item: Item) {
+        print("")
+    }
 }

@@ -164,4 +164,33 @@ class DatabaseServices {
             }
         }
     }
+    
+    public func fetchUserItems(userId: String, completion: @escaping (Result<[Item], Error>) -> ()) {
+        
+        db.collection(DatabaseServices.itemsCollection).whereField("sellerId", isEqualTo: userId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot {
+                let items = snapshot.documents.map {Item(dictonary: $0.data())}
+                completion(.success(items))
+            }
+        }
+    }
+    
+    public func fetchUsersFav(completion: @escaping (Result<[Favorite], Error>) -> ()) {
+        
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        db.collection(DatabaseServices.userCollection).document(user.uid).collection(DatabaseServices.favCollection).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if let snapshot = snapshot {
+                    let favorites = snapshot.documents.compactMap {Favorite(dictionary: $0.data())}
+                    completion(.success(favorites))
+                }
+            }
+        }
+    }
 }

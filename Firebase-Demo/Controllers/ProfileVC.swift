@@ -35,6 +35,8 @@ class ProfileVC: UIViewController {
         }
     }
     
+    private var refreshControl: UIRefreshControl!
+    
     private let storageService = StorageServices()
     
     private var viewState: ViewState = .myItems {
@@ -43,15 +45,21 @@ class ProfileVC: UIViewController {
         }
     }
     
-    private var myFav = [Int]() {
+    private var myFav = [Favorite]() {
         didSet {
-            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
         }
     }
     
     private var myItems = [Item]() {
         didSet {
-            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+            }
         }
     }
     
@@ -59,7 +67,13 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         displayNameTF.delegate = self
         updateUI()
+        loadAllData()
         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "ItemCell", bundle: nil), forCellReuseIdentifier: "itemCell")
+        refreshControl = UIRefreshControl()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(loadAllData), for: .valueChanged)
     }
     
     private func updateUI() {
@@ -72,6 +86,46 @@ class ProfileVC: UIViewController {
         profileImage.kf.setImage(with: user.photoURL)
     }
     
+    @objc
+    private func fetchUserItems() {
+        
+        guard let user = Auth.auth().currentUser else {
+            refreshControl.endRefreshing()
+            return
+        }
+        
+        DatabaseServices.shared.fetchUserItems(userId: user.uid) { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Fail", message: "\(error.localizedDescription)")
+                }
+            case .success(let items):
+                self?.myItems = items
+            }
+        }
+    }
+    
+    @objc
+    private func fetchUserFav() {
+        
+        DatabaseServices.shared.fetchUsersFav { [weak self] (result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "Fail", message: "\(error.localizedDescription)")
+                }
+            case .success(let favs):
+                self?.myFav = favs
+            }
+        }
+    }
+    
+    @objc
+       private func loadAllData() {
+           fetchUserFav()
+           fetchUserItems()
+       }
     
     @IBAction func updatedProfile(_ sender: UIButton) {
         // change the users display name
@@ -215,10 +269,14 @@ extension ProfileVC: UITableViewDataSource {
             cell.configureCell(item: aItem)
         } else {
             let aFav = myFav[indexPath.row]
-            
+            cell.configureCell(for: aFav)
         }
         return cell
     }
-    
-    
+}
+
+extension ProfileVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 140
+    }
 }
