@@ -28,7 +28,6 @@ class LoginViewController: UIViewController {
     
     private var authSession = AuthenticationSession()
     
-    private let db = DatabaseServices()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +76,7 @@ class LoginViewController: UIViewController {
     }
     
     private func createDataBaseUser(authDataResult: AuthDataResult) {
-        db.createDataBaseUser(authDataResult: authDataResult) { [weak self](result) in
+        DatabaseServices.shared.createDataBaseUser(authDataResult: authDataResult) { [weak self](result) in
             switch result {
             case .failure(let error):
                 DispatchQueue.main.async {

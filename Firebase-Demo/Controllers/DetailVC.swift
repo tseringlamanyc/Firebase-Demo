@@ -13,10 +13,9 @@ class DetailVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var commentTF: UITextField!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     private var item: Item
-    
-    private let db = DatabaseServices()
     
     private var listener: ListenerRegistration?
     
@@ -53,6 +52,7 @@ class DetailVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        registerKeyboardNotification()
         listener = Firestore.firestore().collection(DatabaseServices.itemsCollection).document(item.itemId).collection(DatabaseServices.commentsCollection).addSnapshotListener({ [weak self] (snapshot, error) in
             if let error = error {
                 DispatchQueue.main.async {
@@ -67,7 +67,28 @@ class DetailVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        unregisterKeyboardNotification()
         listener?.remove()
+    }
+    
+    private func registerKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func unregisterKeyboardNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc
+    private func keyboardWillShow(notification: Notification) {
+        
+    }
+    
+    @objc
+    private func keyboardWillHide(notification: Notification) {
+        
     }
     
     
@@ -81,7 +102,7 @@ class DetailVC: UIViewController {
     }
     
     private func postComment(text: String) {
-        db.postComment(comment: text, item: item) { [weak self] (result) in
+        DatabaseServices.shared.postComment(comment: text, item: item) { [weak self] (result) in
             switch result {
             case .failure(_):
                 DispatchQueue.main.async {

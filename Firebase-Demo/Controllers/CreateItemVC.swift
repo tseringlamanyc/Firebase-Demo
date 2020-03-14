@@ -18,8 +18,6 @@ class CreateItemVC: UIViewController {
     
     private var category: Category
     
-    private let dbService = DatabaseServices()
-    
     private let storageService = StorageServices()
     
     private var selectedImage: UIImage? {
@@ -93,7 +91,7 @@ class CreateItemVC: UIViewController {
         
         let resizeImage = UIImage.resizeImage(originalImage: selectedImage, rect: itemImage.bounds)
         
-        dbService.createItem(itemName: itemName, price: price, category: category, displayName: displayName) { [weak self](result) in
+        DatabaseServices.shared.createItem(itemName: itemName, price: price, category: category, displayName: displayName) { [weak self](result) in
             switch result {
             case .failure(let error):
                 DispatchQueue.main.async {

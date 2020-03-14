@@ -21,6 +21,9 @@ class DatabaseServices {
     // Need a reference to the firebase firestore
     private let db = Firestore.firestore()
     
+    private init() {}
+    static let shared = DatabaseServices()
+    
     public func createItem(itemName: String, price: Double, category: Category, displayName: String, completion: @escaping (Result<String, Error>) -> ()) {
         guard let user = Auth.auth().currentUser else {return}
         
@@ -73,7 +76,7 @@ class DatabaseServices {
     }
     
     public func deleteItem(item: Item, completion: @escaping (Result<Bool, Error>) -> ()) {
-        db.collection(DatabaseServices.userCollection).document(item.itemId).delete { (error) in
+        db.collection(DatabaseServices.itemsCollection).document(item.itemId).delete { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {

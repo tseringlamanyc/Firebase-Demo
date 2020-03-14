@@ -31,7 +31,6 @@ class ProfileVC: UIViewController {
     
     private let storageService = StorageServices()
     
-    private let dataBaseService = DatabaseServices()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +98,7 @@ class ProfileVC: UIViewController {
     }
     
     private func updateDataBaseUser(displayName: String, photoURL: String) {
-        dataBaseService.updateDataBaseUser(displayName: displayName, photoURL: photoURL) { (result) in
+        DatabaseServices.shared.updateDataBaseUser(displayName: displayName, photoURL: photoURL) { (result) in
             switch result {
             case .failure(let error):
                 print(error)

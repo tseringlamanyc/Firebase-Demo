@@ -18,8 +18,6 @@ class ItemFeedVC: UIViewController {
     
     private let storageService = StorageServices()
     
-    private let db = DatabaseServices()
-    
     private var items = [Item]() {
         didSet {
             DispatchQueue.main.async {
@@ -78,7 +76,7 @@ extension ItemFeedVC: UITableViewDataSource {
         if editingStyle == .delete {
             // Create a reference to the file to delete
             let item = items[indexPath.row]
-            db.deleteItem(item: item) { [weak self] (result) in
+            DatabaseServices.shared.deleteItem(item: item) { [weak self] (result) in
                 switch result {
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -105,6 +103,7 @@ extension ItemFeedVC: UITableViewDataSource {
 }
 
 extension ItemFeedVC: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
